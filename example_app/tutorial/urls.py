@@ -23,10 +23,8 @@ class JSONHyperSchemaRenderer(renderers.BaseRenderer):
     format = 'swagger'
 
     def render(self, data, media_type=None, renderer_context=None):
-        with open(os.path.join(
-                os.path.dirname(__file__), "schema.json"), 'rb') as f:
-            codec = JSONHyperSchemaCodec().load(f.read())
-        return codec.dump(data)
+        codec = JSONHyperSchemaCodec()
+        return codec.load(data)
 
 
 class SwaggerSchemaView(APIView):
