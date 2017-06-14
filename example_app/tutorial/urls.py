@@ -22,7 +22,7 @@ class JSONHyperSchemaRenderer(renderers.BaseRenderer):
     format = 'swagger'
 
     def render(self, data, media_type=None, renderer_context=None):
-        codec = JSONHyperSchemaCodec()
+        codec = JSONHyperSchemaCodec().load("schema.json")
         return codec.dump(data)
 
 

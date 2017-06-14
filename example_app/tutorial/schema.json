@@ -1,0 +1,28 @@
+{
+  "type" : "object",
+  "required" : [
+    "code"
+  ],
+  "properties" : {
+    "code" : {
+      "description" : "",
+      "type" : "string"
+    },
+    "language" : {
+      "description" : "",
+      "type" : "string"
+    },
+    "linenos" : {
+      "description" : "",
+      "type" : "boolean"
+    },
+    "title" : {
+      "type" : "string",
+      "description" : ""
+    },
+    "style" : {
+      "description" : "",
+      "type" : "string"
+    }
+  }
+}
