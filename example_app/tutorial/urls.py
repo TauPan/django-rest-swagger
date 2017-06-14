@@ -1,4 +1,5 @@
 from django.conf.urls import url, include
+import os
 from rest_framework.routers import DefaultRouter
 
 from rest_framework.permissions import AllowAny
@@ -22,7 +23,8 @@ class JSONHyperSchemaRenderer(renderers.BaseRenderer):
     format = 'swagger'
 
     def render(self, data, media_type=None, renderer_context=None):
-        with open("schema.json", 'rb') as f:
+        with open(os.path.join(
+                os.path.dirname(__file__), "schema.json"), 'rb') as f:
             codec = JSONHyperSchemaCodec().load(f.read())
         return codec.dump(data)
 
