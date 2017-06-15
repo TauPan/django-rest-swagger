@@ -4,6 +4,8 @@ from django.conf.urls import url, include
 
 from coreapi.compat import force_bytes
 
+from openapi_codec.encode import generate_swagger_object
+
 from rest_framework.routers import DefaultRouter
 
 from rest_framework.permissions import AllowAny
@@ -28,7 +30,7 @@ class JSONHyperSchemaRenderer(renderers.BaseRenderer):
 
     def render(self, data, media_type=None, renderer_context=None):
         codec = JSONHyperSchemaCodec()
-        return codec.load(force_bytes(json.dumps(data)))
+        return codec.load(force_bytes(json.dumps(generate_swagger_object(data))))
 
 
 class SwaggerSchemaView(APIView):
