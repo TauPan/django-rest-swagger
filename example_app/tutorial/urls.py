@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.schemas import SchemaGenerator
 from rest_framework.views import APIView
 from rest_framework_swagger import renderers
+from rest_framework import status
 from jsonhyperschema_codec import JSONHyperSchemaCodec
 
 from snippets import views
@@ -17,14 +18,17 @@ router.register(r'snippets', views.SnippetViewSet)
 router.register(r'users', views.UserViewSet)
 
 
-class JSONHyperSchemaRenderer(renderers.BaseRenderer):
+class JSONHyperSchemaRenderer(JSONHyperSchemaCodec):
 
     media_type = 'application/schema+json'
     format = 'swagger'
 
     def render(self, data, media_type=None, renderer_context=None):
+        if renderer_context['response'].status_code != status.HTTP_200_OK:
+            return renderers.JSONRenderer().render(data)
+        extra = self.get_customizations()
         codec = JSONHyperSchemaCodec()
-        return codec.load(data)
+        return codec.load(data, extra=extra)
 
 
 class SwaggerSchemaView(APIView):
