@@ -1,5 +1,9 @@
+import json
+
 from django.conf.urls import url, include
-import os
+
+from coreapi.compat import force_bytes
+
 from rest_framework.routers import DefaultRouter
 
 from rest_framework.permissions import AllowAny
@@ -7,7 +11,6 @@ from rest_framework.response import Response
 from rest_framework.schemas import SchemaGenerator
 from rest_framework.views import APIView
 from rest_framework_swagger import renderers
-from rest_framework import status
 from jsonhyperschema_codec import JSONHyperSchemaCodec
 
 from snippets import views
@@ -24,11 +27,8 @@ class JSONHyperSchemaRenderer(renderers.BaseRenderer):
     format = 'swagger'
 
     def render(self, data, media_type=None, renderer_context=None):
-        if renderer_context['response'].status_code != status.HTTP_200_OK:
-            return renderers.JSONRenderer().render(data)
-        extra = self.get_customizations()
         codec = JSONHyperSchemaCodec()
-        return codec.load(data, extra=extra)
+        return codec.load(force_bytes(json.dumps(data)))
 
 
 class SwaggerSchemaView(APIView):
