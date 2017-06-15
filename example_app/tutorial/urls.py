@@ -26,7 +26,7 @@ router.register(r'users', views.UserViewSet)
 class JSONHyperSchemaRenderer(renderers.BaseRenderer):
 
     media_type = 'application/schema+json'
-    format = 'swagger'
+    format = 'json'
 
     def render(self, data, media_type=None, renderer_context=None):
         codec = JSONHyperSchemaCodec()
