@@ -18,7 +18,7 @@ router.register(r'snippets', views.SnippetViewSet)
 router.register(r'users', views.UserViewSet)
 
 
-class JSONHyperSchemaRenderer(JSONHyperSchemaCodec):
+class JSONHyperSchemaRenderer(renderers.BaseRenderer):
 
     media_type = 'application/schema+json'
     format = 'swagger'
